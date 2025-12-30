@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio | Wira</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    /* =====================
+       ROOT & RESET
+    ====================== */
+    :root {
+      --bg: #0f172a;
+      --glass: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.15);
+      --primary: #60a5fa;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --blur: blur(14px);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 80px 20px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    /* =====================
+       GLASS CARD
+    ====================== */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+    }
+
+    /* =====================
+       HEADER
+    ====================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: var(--blur);
+      background: rgba(2, 6, 23, 0.6);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+      transition: color 0.3s, transform 0.2s;
+      will-change: transform, color;
+    }
+
+    /* Hover: change color to blue */
+    nav a:hover,
+    nav a:focus {
+      color: #3b82f6; /* blue-500 */
+      outline: none;
+    }
+
+    /* Click animation */
+    @keyframes clickBounce {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-6px) scale(1.05); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    nav a.clicked {
+      animation: clickBounce 350ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* =====================
+       HERO
+    ====================== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .hero span {
+      color: var(--primary);
+    }
+
+    /* =====================
+       PROJECTS
+    ====================== */
+    .project-wrapper {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .project-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .project-wrapper::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    .project-card {
+      min-width: 300px;
+      scroll-snap-align: start;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .project-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    /* =====================
+       SKILLS
+    ====================== */
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .skill {
+      text-align: center;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+    }
+
+    /* =====================
+       CONTACT
+    ====================== */
+    .contact p {
+      margin-bottom: 10px;
+    }
+
+    /* =====================
+       FOOTER
+    ====================== */
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =====================
+       RESPONSIVE
+    ====================== */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      nav a {
+        margin-left: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <strong>Wira Eka Saputra</strong>
+    <div>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<!-- MAIN / HERO -->
+<section class="hero">
+  <div>
+    <h1>Hi, I'm <span>Wira</span></h1>
+    <p>
+      Seorang developer yang fokus membangun web modern, fungsional,
+      dan scalable dengan pendekatan clean code dan UX yang solid.
+    </p>
+  </div>
+
+  <div class="glass">
+    <p>
+      Saya membantu klien mengubah ide menjadi produk digital
+      yang profesional dan siap digunakan.
+    </p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="glass">
+    <h2>About Me</h2>
+    <p>
+      Saya adalah developer dengan latar belakang IT yang memiliki
+      minat pada pengembangan web modern. Saya terbiasa membangun
+      antarmuka yang bersih, responsif, dan maintainable.
+      Fokus utama saya adalah membuat solusi yang tidak hanya
+      terlihat bagus, tetapi juga efisien dan mudah dikembangkan
+      di masa depan.
+    </p>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="project-wrapper">
+    <div class="glass project-card">
+      <img src="https://via.placeholder.com/400x250" alt="">
+      <h3>Project One</h3>
+      <p>Web application dengan UI modern dan performa optimal.</p>
+    </div>
+
+    <div class="glass project-card">
+      <img src="https://via.placeholder.com/400x250" alt="">
+      <h3>Project Two</h3>
+      <p>Landing page profesional untuk kebutuhan bisnis.</p>
+    </div>
+
+    <div class="glass project-card">
+      <img src="https://via.placeholder.com/400x250" alt="">
+      <h3>Project Three</h3>
+      <p>Dashboard interaktif dengan fokus UX dan data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <h2>Skills</h2>
+
+  <div class="skills">
+    <div class="skill">HTML</div>
+    <div class="skill">CSS</div>
+    <div class="skill">JavaScript</div>
+    <div class="skill">Responsive Design</div>
+    <div class="skill">UI / UX</div>
+    <div class="skill">Git</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="glass contact">
+    <h2>Contact</h2>
+    <p>Email: wiraekasaputra123@gmail.com</p>
+    <p>Instagram: @wiraekasaputra</p>
+    <p>GitHub: github.com/username</p>
+    <p>Facebook: Wira Eka Saputra</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 Wira Eka Saputra — Built with clean code & glass UI
+</footer>
+
+<script>
+  (function () {
+    const links = document.querySelectorAll('nav a');
+
+    function animateLink(el) {
+      // Restart animation
+      el.classList.remove('clicked');
+      void el.offsetWidth; // force reflow
+      el.classList.add('clicked');
+      // clean up after animation
+      function onEnd() {
+        el.classList.remove('clicked');
+        el.removeEventListener('animationend', onEnd);
+      }
+      el.addEventListener('animationend', onEnd);
+    }
+
+    links.forEach(link => {
+      // pointerdown shows animation before navigation happens
+      link.addEventListener('pointerdown', () => animateLink(link));
+
+      // support keyboard activation (Enter / Space)
+      link.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          animateLink(link);
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>

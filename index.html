@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>Portfolio | Wira</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dyZ6Yk1+8Kf4kz6gq5B8bqv1QKX2xZQ5h2B5z9s6b1Q5k9X2y9K0z5G1Q9Z6m2Yp5y6Q2K7c9d3e6f1a2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     /* =====================
@@ -220,8 +222,53 @@
     /* =====================
        CONTACT
     ====================== */
-    .contact p {
-      margin-bottom: 10px;
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .contact .contact-info p {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .contact i.fas,
+    .contact i.fab {
+      color: var(--primary);
+      min-width: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .contact a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      color: #3b82f6;
+    }
+
+    .contact .contact-map iframe {
+      width: 100%;
+      height: 220px;
+      border: 0;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .contact .contact-map iframe {
+        height: 260px;
+      }
     }
 
     /* =====================

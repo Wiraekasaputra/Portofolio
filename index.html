@@ -36,7 +36,12 @@
       max-width: 1100px;
       margin: auto;
       padding: 80px 20px;
+      /* ensure smooth scrolling lands content below the sticky header */
+      scroll-margin-top: 90px;
     }
+
+    /* enable smooth scrolling for anchor navigation */
+    html { scroll-behavior: smooth; }
 
     h2 {
       font-size: 2rem;
@@ -87,6 +92,8 @@
       font-size: 14px;
       transition: color 0.3s, transform 0.2s;
       will-change: transform, color;
+      position: relative;
+      padding-bottom: 6px;
     }
 
     /* Hover: change color to blue */
@@ -105,6 +112,37 @@
 
     nav a.clicked {
       animation: clickBounce 350ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* underline indicator (hidden by default) */
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      width: 60%;
+      height: 2px;
+      background: #3b82f6;
+      transition: transform 220ms ease;
+    }
+
+    /* show underline when active or hovered/focused */
+    nav a.active::after,
+    nav a:hover::after,
+    nav a:focus::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* header press (shift down) */
+    header {
+      will-change: transform;
+    }
+
+    header.pressed {
+      transform: translateY(6px);
+      transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     /* =====================
@@ -318,6 +356,8 @@
 <script>
   (function () {
     const links = document.querySelectorAll('nav a');
+    const header = document.querySelector('header');
+    const sections = document.querySelectorAll('section[id]');
 
     function animateLink(el) {
       // Restart animation
@@ -336,6 +376,31 @@
       // pointerdown shows animation before navigation happens
       link.addEventListener('pointerdown', () => animateLink(link));
 
+      // click: if it's an internal anchor, animate header and smooth-scroll to target
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            // animate header (shift down briefly)
+            header.classList.add('pressed');
+            animateLink(link);
+            // scroll to the target (CSS scroll-margin-top ensures it's not hidden)
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // update active class immediately
+            setActiveLinkByHref(href);
+            // remove header press after animation time
+            setTimeout(() => header.classList.remove('pressed'), 320);
+            // update URL hash without jumping
+            history.pushState(null, '', href);
+          }
+        } else {
+          // for links to other pages, mark active if path matches
+          setTimeout(updateActiveByLocation, 100);
+        }
+      });
+
       // support keyboard activation (Enter / Space)
       link.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -343,6 +408,50 @@
         }
       });
     });
+
+    // --- Active link management ---
+    function setActiveLinkByHref(href) {
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === href));
+    }
+
+    function updateActiveByLocation() {
+      // external/different page links
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#')) {
+          try {
+            const url = new URL(link.href);
+            link.classList.toggle('active', url.pathname === location.pathname);
+          } catch (err) {
+            // ignore
+          }
+        }
+      });
+    }
+
+    // observe sections to set active nav link when scrolled
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            setActiveLinkByHref('#' + id);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -40% 0px', threshold: 0.25 });
+
+      sections.forEach(s => observer.observe(s));
+    }
+
+    // handle back/forward and initial load
+    window.addEventListener('popstate', () => {
+      if (location.hash) setActiveLinkByHref(location.hash);
+      else updateActiveByLocation();
+    });
+
+    // initial activation
+    if (location.hash) setActiveLinkByHref(location.hash);
+    else updateActiveByLocation();
   })();
 </script>
 </body>

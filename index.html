@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <title>Portfolio | Wira</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Font Awesome for social icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dyZ6Yk1+8Kf4kz6gq5B8bqv1QKX2xZQ5h2B5z9s6b1Q5k9X2y9K0z5G1Q9Z6m2Yp5y6Q2K7c9d3e6f1a2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     /* =====================
@@ -137,6 +135,45 @@
       transform: translateX(-50%) scaleX(1);
     }
 
+    /* brand / home button */
+    .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+      margin-right: 8px;
+      font-weight: 700;
+      transition: color 0.3s, transform 0.2s;
+      will-change: transform, color;
+      position: relative;
+      padding-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .brand:hover,
+    .brand:focus {
+      color: #3b82f6; /* blue-500 */
+      outline: none;
+    }
+
+    .brand::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      width: 60%;
+      height: 2px;
+      background: #3b82f6;
+      transition: transform 220ms ease;
+    }
+
+    .brand.active::after,
+    .brand:hover::after,
+    .brand:focus::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
     /* header press (shift down) */
     header {
       will-change: transform;
@@ -152,9 +189,39 @@
     ====================== */
     .hero {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1fr;
       gap: 40px;
       align-items: center;
+      justify-items: center; /* center the single column content */
+    }
+
+    /* left side of hero: avatar above heading, centered */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid rgba(255,255,255,0.12);
+      box-shadow: 0 4px 14px rgba(2,6,23,0.45);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .hero h1 {
@@ -164,6 +231,37 @@
 
     .hero span {
       color: var(--primary);
+    }
+
+    /* reveal animation for hero title and paragraph */
+    .hero-left h1,
+    .hero-left p {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 600ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .hero-left.revealed h1 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 80ms;
+    }
+
+    .hero-left.revealed p {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 220ms;
+    }
+
+    /* respect user preference for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-left h1,
+      .hero-left p {
+        transition: none;
+        transform: none;
+        opacity: 1;
+      }
     }
 
     /* =====================
@@ -222,53 +320,8 @@
     /* =====================
        CONTACT
     ====================== */
-    .contact {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .contact .contact-info p {
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-    }
-
-    .contact i.fas,
-    .contact i.fab {
-      color: var(--primary);
-      min-width: 20px;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .contact a {
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .contact a:hover {
-      color: #3b82f6;
-    }
-
-    .contact .contact-map iframe {
-      width: 100%;
-      height: 220px;
-      border: 0;
-      border-radius: 12px;
-    }
-
-    @media (max-width: 768px) {
-      .contact {
-        grid-template-columns: 1fr;
-      }
-
-      .contact .contact-map iframe {
-        height: 260px;
-      }
+    .contact p {
+      margin-bottom: 10px;
     }
 
     /* =====================
@@ -293,6 +346,10 @@
       nav a {
         margin-left: 10px;
       }
+      .avatar {
+        width: 70px;
+        height: 70px;
+      }
     }
   </style>
 </head>
@@ -302,7 +359,7 @@
 <!-- HEADER -->
 <header>
   <nav>
-    <strong>Wira Eka Saputra</strong>
+    <a href="#" class="brand" aria-label="Kembali ke halaman awal">Wira Eka Saputra</a>
     <div>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -314,7 +371,10 @@
 
 <!-- MAIN / HERO -->
 <section class="hero">
-  <div>
+  <div class="hero-left">
+    <div class="avatar">
+      <img src="C:\Users\LENOVO\Downloads\Tugas Web\foto\image.jpg" alt="Foto Wira" />
+    </div>
     <h1>Hi, I'm <span>Wira</span></h1>
     <p>
       Seorang developer yang fokus membangun web modern, fungsional,
@@ -322,11 +382,6 @@
     </p>
   </div>
 
-  <div class="glass">
-    <p>
-      Saya membantu klien mengubah ide menjadi produk digital
-      yang profesional dan siap digunakan.
-    </p>
   </div>
 </section>
 
@@ -335,7 +390,7 @@
   <div class="glass">
     <h2>About Me</h2>
     <p>
-      Saya adalah developer dengan latar belakang IT yang memiliki
+      Saya adalah seorang mahasiswa berjurusan IT yang memiliki
       minat pada pengembangan web modern. Saya terbiasa membangun
       antarmuka yang bersih, responsif, dan maintainable.
       Fokus utama saya adalah membuat solusi yang tidak hanya
@@ -426,7 +481,18 @@
       // click: if it's an internal anchor, animate header and smooth-scroll to target
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
-        if (href && href.startsWith('#')) {
+        if (href && href === '#') {
+          // special: home/brand -> scroll to top
+          e.preventDefault();
+          header.classList.add('pressed');
+          animateLink(link);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // mark brand active
+          setActiveLinkByHref('#');
+          setTimeout(() => header.classList.remove('pressed'), 320);
+          // keep URL clean (no hash)
+          history.pushState(null, '', location.pathname);
+        } else if (href && href.startsWith('#')) {
           const target = document.querySelector(href);
           if (target) {
             e.preventDefault();
@@ -499,6 +565,28 @@
     // initial activation
     if (location.hash) setActiveLinkByHref(location.hash);
     else updateActiveByLocation();
+
+    // reveal hero title/paragraph when it enters viewport
+    (function() {
+      const heroLeft = document.querySelector('.hero-left');
+      const heroSection = document.querySelector('.hero');
+      if (!heroLeft || !heroSection) return;
+
+      if ('IntersectionObserver' in window) {
+        const hObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              heroLeft.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        hObserver.observe(heroSection);
+      } else {
+        // fallback: reveal immediately
+        heroLeft.classList.add('revealed');
+      }
+    })();
   })();
 </script>
 </body>

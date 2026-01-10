@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* =====================
-       ROOT & RESET
-    ====================== */
     :root {
       --bg: #0f172a;
       --glass: rgba(255, 255, 255, 0.08);
@@ -36,11 +33,9 @@
       max-width: 1100px;
       margin: auto;
       padding: 80px 20px;
-      /* ensure smooth scrolling lands content below the sticky header */
       scroll-margin-top: 90px;
     }
 
-    /* enable smooth scrolling for anchor navigation */
     html { scroll-behavior: smooth; }
 
     h2 {
@@ -53,9 +48,6 @@
       color: var(--muted);
     }
 
-    /* =====================
-       GLASS CARD
-    ====================== */
     .glass {
       background: var(--glass);
       backdrop-filter: var(--blur);
@@ -64,9 +56,6 @@
       padding: 30px;
     }
 
-    /* =====================
-       HEADER
-    ====================== */
     header {
       position: sticky;
       top: 0;
@@ -96,14 +85,12 @@
       padding-bottom: 6px;
     }
 
-    /* Hover: change color to blue */
     nav a:hover,
     nav a:focus {
-      color: #3b82f6; /* blue-500 */
+      color: #3b82f6;
       outline: none;
     }
 
-    /* Click animation */
     @keyframes clickBounce {
       0% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-6px) scale(1.05); }
@@ -128,14 +115,12 @@
       transition: transform 220ms ease;
     }
 
-    /* show underline when active or hovered/focused */
     nav a.active::after,
     nav a:hover::after,
     nav a:focus::after {
       transform: translateX(-50%) scaleX(1);
     }
 
-    /* brand / home button */
     .brand {
       color: var(--text);
       text-decoration: none;
@@ -151,7 +136,7 @@
 
     .brand:hover,
     .brand:focus {
-      color: #3b82f6; /* blue-500 */
+      color: #3b82f6; 
       outline: none;
     }
 
@@ -174,7 +159,6 @@
       transform: translateX(-50%) scaleX(1);
     }
 
-    /* header press (shift down) */
     header {
       will-change: transform;
     }
@@ -184,18 +168,16 @@
       transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* =====================
-       HERO
-    ====================== */
+   
     .hero {
       display: grid;
       grid-template-columns: 1fr;
       gap: 40px;
       align-items: center;
-      justify-items: center; /* center the single column content */
+      justify-items: center; 
     }
 
-    /* left side of hero: avatar above heading, centered */
+ 
     .hero-left {
       display: flex;
       flex-direction: column;
@@ -233,7 +215,7 @@
       color: var(--primary);
     }
 
-    /* reveal animation for hero title and paragraph */
+  
     .hero-left h1,
     .hero-left p {
       opacity: 0;
@@ -254,7 +236,7 @@
       transition-delay: 220ms;
     }
 
-    /* respect user preference for reduced motion */
+   
     @media (prefers-reduced-motion: reduce) {
       .hero-left h1,
       .hero-left p {
@@ -264,9 +246,7 @@
       }
     }
 
-    /* =====================
-       PROJECTS
-    ====================== */
+ 
     .project-wrapper {
       display: flex;
       gap: 20px;
@@ -300,9 +280,7 @@
       margin-bottom: 15px;
     }
 
-    /* =====================
-       SKILLS
-    ====================== */
+
     .skills {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -317,16 +295,12 @@
       border: 1px solid var(--border);
     }
 
-    /* =====================
-       CONTACT
-    ====================== */
+    
     .contact p {
       margin-bottom: 10px;
     }
 
-    /* =====================
-       FOOTER
-    ====================== */
+ 
     footer {
       text-align: center;
       padding: 30px;
@@ -335,9 +309,7 @@
       font-size: 14px;
     }
 
-    /* =====================
-       RESPONSIVE
-    ====================== */
+    
     @media (max-width: 768px) {
       .hero {
         grid-template-columns: 1fr;
@@ -356,7 +328,6 @@
 
 <body>
 
-<!-- HEADER -->
 <header>
   <nav>
     <a href="#" class="brand" aria-label="Kembali ke halaman awal">Wira Eka Saputra</a>
@@ -369,7 +340,7 @@
   </nav>
 </header>
 
-<!-- MAIN / HERO -->
+
 <section class="hero">
   <div class="hero-left">
     <div class="avatar">
@@ -385,7 +356,7 @@
   </div>
 </section>
 
-<!-- ABOUT -->
+
 <section id="about">
   <div class="glass">
     <h2>About Me</h2>
@@ -400,7 +371,7 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
+
 <section id="projects">
   <h2>Projects</h2>
 
@@ -425,7 +396,7 @@
   </div>
 </section>
 
-<!-- SKILLS -->
+
 <section id="skills">
   <h2>Skills</h2>
 
@@ -439,7 +410,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="glass contact">
     <h2>Contact</h2>
@@ -450,7 +420,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   © 2025 Wira Eka Saputra — Built with clean code & glass UI
 </footer>
@@ -462,11 +431,11 @@
     const sections = document.querySelectorAll('section[id]');
 
     function animateLink(el) {
-      // Restart animation
+      
       el.classList.remove('clicked');
-      void el.offsetWidth; // force reflow
+      void el.offsetWidth; 
       el.classList.add('clicked');
-      // clean up after animation
+      
       function onEnd() {
         el.classList.remove('clicked');
         el.removeEventListener('animationend', onEnd);
@@ -475,46 +444,46 @@
     }
 
     links.forEach(link => {
-      // pointerdown shows animation before navigation happens
+      
       link.addEventListener('pointerdown', () => animateLink(link));
 
-      // click: if it's an internal anchor, animate header and smooth-scroll to target
+      
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
         if (href && href === '#') {
-          // special: home/brand -> scroll to top
+         
           e.preventDefault();
           header.classList.add('pressed');
           animateLink(link);
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          // mark brand active
+         
           setActiveLinkByHref('#');
           setTimeout(() => header.classList.remove('pressed'), 320);
-          // keep URL clean (no hash)
+          
           history.pushState(null, '', location.pathname);
         } else if (href && href.startsWith('#')) {
           const target = document.querySelector(href);
           if (target) {
             e.preventDefault();
-            // animate header (shift down briefly)
+           
             header.classList.add('pressed');
             animateLink(link);
-            // scroll to the target (CSS scroll-margin-top ensures it's not hidden)
+            )
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // update active class immediately
+            
             setActiveLinkByHref(href);
-            // remove header press after animation time
+           
             setTimeout(() => header.classList.remove('pressed'), 320);
-            // update URL hash without jumping
+            
             history.pushState(null, '', href);
           }
         } else {
-          // for links to other pages, mark active if path matches
+         
           setTimeout(updateActiveByLocation, 100);
         }
       });
 
-      // support keyboard activation (Enter / Space)
+     
       link.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           animateLink(link);
@@ -522,13 +491,13 @@
       });
     });
 
-    // --- Active link management ---
+    
     function setActiveLinkByHref(href) {
       links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === href));
     }
 
     function updateActiveByLocation() {
-      // external/different page links
+      
       links.forEach(link => {
         const href = link.getAttribute('href');
         if (href && !href.startsWith('#')) {
@@ -536,13 +505,13 @@
             const url = new URL(link.href);
             link.classList.toggle('active', url.pathname === location.pathname);
           } catch (err) {
-            // ignore
+            
           }
         }
       });
     }
 
-    // observe sections to set active nav link when scrolled
+    
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -556,17 +525,17 @@
       sections.forEach(s => observer.observe(s));
     }
 
-    // handle back/forward and initial load
+    
     window.addEventListener('popstate', () => {
       if (location.hash) setActiveLinkByHref(location.hash);
       else updateActiveByLocation();
     });
 
-    // initial activation
+    
     if (location.hash) setActiveLinkByHref(location.hash);
     else updateActiveByLocation();
 
-    // reveal hero title/paragraph when it enters viewport
+   
     (function() {
       const heroLeft = document.querySelector('.hero-left');
       const heroSection = document.querySelector('.hero');
@@ -583,7 +552,7 @@
         }, { threshold: 0.5 });
         hObserver.observe(heroSection);
       } else {
-        // fallback: reveal immediately
+        
         heroLeft.classList.add('revealed');
       }
     })();
@@ -591,3 +560,4 @@
 </script>
 </body>
 </html>
+
